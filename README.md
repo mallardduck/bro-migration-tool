@@ -5,7 +5,7 @@
 **Disclaimer:** This is not an official Rancher tool, nor is it supported by SUSE/Rancher support.
 This tool is a dev tool meant for engineers and comes with no warranty or support.
 
-## What it do?
+## What does it do?
 This tool essentially just extracts the `"clusters.management.cattle.io#v3/local.json"` file from the tar.
 Then you can edit it as needed and then repackage the file into a backup.
 
@@ -16,3 +16,6 @@ Then you can edit it as needed and then repackage the file into a backup.
 4. Restore the test backup you just modified.
 
 The above example will output a new archive at `k3s-test1.tar.gz`.
+
+### Why?
+To assist with a very specific workflow being used while investigating potential improvements to BRO.
