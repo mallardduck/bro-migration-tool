@@ -53,7 +53,7 @@ func readLocalClusterJson(jsonPath string) []byte {
 
 func prepareTempBackupDir(backupPath string) (*string, error) {
 	tmpDir, err := os.MkdirTemp("", "bro-migrate")
-	//defer os.RemoveAll(tmpDir) // clean up
+	defer os.RemoveAll(tmpDir) // clean up
 
 	if err != nil {
 		return nil, fmt.Errorf("error creating temp path: %v", err)
