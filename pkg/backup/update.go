@@ -33,6 +33,7 @@ func UpdateLocalIntoBackup(jsonPath string, backupPath string, newBackupName str
 	if err != nil {
 		log.Fatalf("Error repacking backup: %v", err)
 	}
+	defer os.RemoveAll(*tempBackupPath) // clean up
 }
 
 func readLocalClusterJson(jsonPath string) []byte {
@@ -53,7 +54,6 @@ func readLocalClusterJson(jsonPath string) []byte {
 
 func prepareTempBackupDir(backupPath string) (*string, error) {
 	tmpDir, err := os.MkdirTemp("", "bro-migrate")
-	defer os.RemoveAll(tmpDir) // clean up
 
 	if err != nil {
 		return nil, fmt.Errorf("error creating temp path: %v", err)
@@ -75,13 +75,13 @@ func prepareTempBackupDir(backupPath string) (*string, error) {
 		currentPath := path.Join(tmpDir, header.Name)
 
 		if header.FileInfo().IsDir() {
-			logrus.Infof("Attempting to create folder: %v", currentPath)
+			logrus.Debugf("Attempting to create folder: %v", currentPath)
 			err = os.Mkdir(currentPath, 0700)
 			if err != nil {
 				return nil, fmt.Errorf("cannot MkdirAll: %v", err)
 			}
 		} else {
-			logrus.Infof("Attempting to create file: %v", currentPath)
+			logrus.Debugf("Attempting to create file: %v", currentPath)
 			newFile, err := os.Create(currentPath)
 			if err != nil {
 				return nil, fmt.Errorf("cannot create file: %v", err)
@@ -159,7 +159,10 @@ func repackBackupFile(backupPath string, name string) error {
 		}
 		return fInfo.Close()
 	}
-	filepath.Walk(backupPath, walkFunc)
+	err = filepath.Walk(backupPath, walkFunc)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

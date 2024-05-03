@@ -84,5 +84,5 @@ func pushLocalJson(c *cli.Context) {
 		logrus.Fatal("The local cluster file doesn't exist.")
 	}
 	backup.UpdateLocalIntoBackup(LocalClusterFilePath, BackupFilePath, NewBackupFilename)
-	logrus.Infoln(BackupFilePath)
+	logrus.Infoln(NewBackupFilename)
 }
