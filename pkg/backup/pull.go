@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -24,19 +23,6 @@ func PullLocalFromBackup(backupPath string, jsonPath string) (bool, error) {
 	}
 
 	return true, nil
-}
-
-func saveLocalClusterJson(jsonPath string, jsonData bytes.Buffer) error {
-	outFile, err := os.Create(jsonPath)
-	if err != nil {
-		panic(err)
-	}
-	defer outFile.Close()
-	_, err = outFile.Write(jsonData.Bytes())
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func extractLocalClusterFromBackup(backupPath string) ([]byte, error) {
@@ -58,7 +44,7 @@ func extractLocalClusterFromBackup(backupPath string) ([]byte, error) {
 		// check if the file path matches the desired path
 		if header.Name == "clusters.management.cattle.io#v3/local.json" {
 			// extract the contents of the file
-			content, err := ioutil.ReadAll(tarReader)
+			content, err := io.ReadAll(tarReader)
 			if err != nil {
 				return nil, fmt.Errorf("error reading tar content: %v", err)
 			}
@@ -68,4 +54,17 @@ func extractLocalClusterFromBackup(backupPath string) ([]byte, error) {
 		}
 	}
 	return localClusterBytes, nil
+}
+
+func saveLocalClusterJson(jsonPath string, jsonData bytes.Buffer) error {
+	outFile, err := os.Create(jsonPath)
+	if err != nil {
+		panic(err)
+	}
+	defer outFile.Close()
+	_, err = outFile.Write(jsonData.Bytes())
+	if err != nil {
+		return err
+	}
+	return nil
 }

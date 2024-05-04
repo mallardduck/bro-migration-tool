@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/mallardduck/bro-migration-tool/pkg/migrate"
 	"os"
 
 	"github.com/mallardduck/bro-migration-tool/pkg/backup"
@@ -56,6 +57,12 @@ func main() {
 			Action: pushLocalJson,
 			Flags:  []cli.Flag{fileFlag, fileOutFlag},
 		},
+		{
+			Name:   "k3s-rke2",
+			Usage:  "Prepare a K3S origin backup for RKE2 restore.",
+			Action: transformK3sBackupForRke2,
+			Flags:  []cli.Flag{fileFlag, fileOutFlag},
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -69,20 +76,37 @@ func pullLocalJson(c *cli.Context) {
 		// path/to/whatever does not exist
 		logrus.Fatal("The backup archive file doesn't exist.")
 	}
+	// TODO: actually do something with these results
 	_, _ = backup.PullLocalFromBackup(BackupFilePath, LocalClusterFilePath)
 }
 
 func pushLocalJson(c *cli.Context) {
+	// Verify the BackupFilePath exists...
+	if _, err := os.Stat(BackupFilePath); errors.Is(err, os.ErrNotExist) {
+		// path/to/whatever does not exist
+		logrus.Fatal("The backup archive file doesn't exist.")
+	}
+	// Verify the LocalClusterFilePath exists...
+	if _, err := os.Stat(LocalClusterFilePath); errors.Is(err, os.ErrNotExist) {
+		// path/to/whatever does not exist
+		logrus.Fatal("The local cluster file doesn't exist.")
+	}
+	localClusterData := backup.ReadLocalClusterJson(LocalClusterFilePath)
+	backup.UpdateLocalIntoBackup(localClusterData, BackupFilePath, NewBackupFilename)
+	logrus.Infoln(NewBackupFilename)
+}
+
+func transformK3sBackupForRke2(c *cli.Context) {
 	// Verify the file exists at the path...
 	if _, err := os.Stat(BackupFilePath); errors.Is(err, os.ErrNotExist) {
 		// path/to/whatever does not exist
 		logrus.Fatal("The backup archive file doesn't exist.")
 	}
-	// Verify the file exists at the path...
-	if _, err := os.Stat(LocalClusterFilePath); errors.Is(err, os.ErrNotExist) {
-		// path/to/whatever does not exist
-		logrus.Fatal("The local cluster file doesn't exist.")
+	localClusterData, err := backup.FetchLocalClusterFromBackup(BackupFilePath, LocalClusterFilePath)
+	if err != nil {
+		logrus.Fatal("Failed to fetch the local cluster from backup file")
 	}
-	backup.UpdateLocalIntoBackup(LocalClusterFilePath, BackupFilePath, NewBackupFilename)
-	logrus.Infoln(NewBackupFilename)
+	// TODO: do the thing to migrate
+	newClusterData := migrate.K3sRancherToRke2Rancher(localClusterData)
+	backup.UpdateLocalIntoBackup(newClusterData, BackupFilePath, NewBackupFilename)
 }

@@ -13,11 +13,7 @@ import (
 	"path/filepath"
 )
 
-func UpdateLocalIntoBackup(jsonPath string, backupPath string, newBackupName string) {
-	jsonData := readLocalClusterJson(jsonPath)
-
-	// TODO: read the backupPath tar.gz file and insert jsonData to update "clusters.management.cattle.io#v3/local.json"
-	// But since tar cannot be updated/(to replace data) we just have to make a new one
+func UpdateLocalIntoBackup(jsonData map[string]interface{}, backupPath string, newBackupName string) {
 	// 1. extract current tar into a temp folder,
 	tempBackupPath, err := prepareTempBackupDir(backupPath)
 	if err != nil {
@@ -36,20 +32,19 @@ func UpdateLocalIntoBackup(jsonPath string, backupPath string, newBackupName str
 	defer os.RemoveAll(*tempBackupPath) // clean up
 }
 
-func readLocalClusterJson(jsonPath string) []byte {
+func ReadLocalClusterJson(jsonPath string) map[string]interface{} {
 	jsonData, err := os.ReadFile(jsonPath)
 	if err != nil {
 		log.Fatalf("Error reading JSON file: %v", err)
 	}
 
 	// Parse the JSON data into an object
-	var jsonObject interface{}
+	var jsonObject map[string]interface{}
 	err = json.Unmarshal(jsonData, &jsonObject)
 	if err != nil {
 		log.Fatalf("Error parsing JSON data: %v", err)
 	}
-	jsonData, err = json.Marshal(jsonObject)
-	return jsonData
+	return jsonObject
 }
 
 func prepareTempBackupDir(backupPath string) (*string, error) {
@@ -94,7 +89,11 @@ func prepareTempBackupDir(backupPath string) (*string, error) {
 	return &tmpDir, nil
 }
 
-func updateLocalClusterInBackup(backupPath string, data []byte) error {
+func updateLocalClusterInBackup(backupPath string, jsonData map[string]interface{}) error {
+	data, err := json.Marshal(jsonData)
+	if err != nil {
+		return err
+	}
 	localClusterFilePath := path.Join(backupPath, "clusters.management.cattle.io#v3/local.json")
 	localClusterFile, err := os.OpenFile(localClusterFilePath, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
