@@ -1,0 +1,386 @@
+{
+	"apiVersion": "management.cattle.io/v3",
+	"kind": "Cluster",
+	"metadata": {
+		"annotations": {
+			"authz.management.cattle.io/creator-role-bindings": "{\"created\":[],\"required\":[\"cluster-owner\"]}",
+			"authz.management.cattle.io/initial-sync": "true",
+			"lifecycle.cattle.io/create.cluster-agent-controller-cleanup": "true",
+			"lifecycle.cattle.io/create.cluster-provisioner-controller": "true",
+			"lifecycle.cattle.io/create.cluster-scoped-gc": "true",
+			"lifecycle.cattle.io/create.mgmt-cluster-rbac-remove": "true",
+			"management.cattle.io/current-cluster-controllers-version": "v1.27.11+k3s1",
+			"provisioner.cattle.io/encrypt-migrated": "true",
+			"provisioner.cattle.io/ke-driver-update": "updated"
+		},
+		"finalizers": [
+			"wrangler.cattle.io/mgmt-cluster-remove",
+			"controller.cattle.io/cluster-agent-controller-cleanup",
+			"controller.cattle.io/cluster-scoped-gc",
+			"controller.cattle.io/cluster-provisioner-controller",
+			"controller.cattle.io/mgmt-cluster-rbac-remove"
+		],
+		"generation": 44,
+		"labels": {
+			"provider.cattle.io": "k3s"
+		},
+		"managedFields": [
+			{
+				"apiVersion": "management.cattle.io/v3",
+				"fieldsType": "FieldsV1",
+				"fieldsV1": {
+					"f:metadata": {
+						"f:annotations": {
+							".": {},
+							"f:authz.management.cattle.io/creator-role-bindings": {},
+							"f:authz.management.cattle.io/initial-sync": {},
+							"f:lifecycle.cattle.io/create.cluster-agent-controller-cleanup": {},
+							"f:lifecycle.cattle.io/create.cluster-provisioner-controller": {},
+							"f:lifecycle.cattle.io/create.cluster-scoped-gc": {},
+							"f:lifecycle.cattle.io/create.mgmt-cluster-rbac-remove": {},
+							"f:management.cattle.io/current-cluster-controllers-version": {},
+							"f:provisioner.cattle.io/encrypt-migrated": {},
+							"f:provisioner.cattle.io/ke-driver-update": {}
+						},
+						"f:finalizers": {
+							".": {},
+							"v:\"controller.cattle.io/cluster-agent-controller-cleanup\"": {},
+							"v:\"controller.cattle.io/cluster-provisioner-controller\"": {},
+							"v:\"controller.cattle.io/cluster-scoped-gc\"": {},
+							"v:\"controller.cattle.io/mgmt-cluster-rbac-remove\"": {},
+							"v:\"wrangler.cattle.io/mgmt-cluster-remove\"": {}
+						},
+						"f:labels": {
+							".": {},
+							"f:provider.cattle.io": {}
+						}
+					},
+					"f:spec": {
+						".": {},
+						"f:agentImageOverride": {},
+						"f:answers": {},
+						"f:clusterSecrets": {},
+						"f:description": {},
+						"f:desiredAgentImage": {},
+						"f:desiredAuthImage": {},
+						"f:displayName": {},
+						"f:dockerRootDir": {},
+						"f:enableClusterAlerting": {},
+						"f:enableClusterMonitoring": {},
+						"f:enableNetworkPolicy": {},
+						"f:fleetWorkspaceName": {},
+						"f:internal": {},
+						"f:k3sConfig": {
+							".": {},
+							"f:k3supgradeStrategy": {
+								".": {},
+								"f:serverConcurrency": {},
+								"f:workerConcurrency": {}
+							},
+							"f:kubernetesVersion": {}
+						},
+						"f:localClusterAuthEndpoint": {
+							".": {},
+							"f:enabled": {}
+						},
+						"f:windowsPreferedCluster": {}
+					},
+					"f:status": {
+						".": {},
+						"f:agentImage": {},
+						"f:aksStatus": {
+							".": {},
+							"f:privateRequiresTunnel": {},
+							"f:rbacEnabled": {},
+							"f:upstreamSpec": {}
+						},
+						"f:allocatable": {
+							".": {},
+							"f:cpu": {},
+							"f:memory": {},
+							"f:pods": {}
+						},
+						"f:appliedEnableNetworkPolicy": {},
+						"f:appliedPodSecurityPolicyTemplateId": {},
+						"f:appliedSpec": {
+							".": {},
+							"f:agentImageOverride": {},
+							"f:answers": {},
+							"f:clusterSecrets": {},
+							"f:description": {},
+							"f:desiredAgentImage": {},
+							"f:desiredAuthImage": {},
+							"f:displayName": {},
+							"f:enableClusterAlerting": {},
+							"f:enableClusterMonitoring": {},
+							"f:enableNetworkPolicy": {},
+							"f:internal": {},
+							"f:localClusterAuthEndpoint": {
+								".": {},
+								"f:enabled": {}
+							},
+							"f:windowsPreferedCluster": {}
+						},
+						"f:authImage": {},
+						"f:capabilities": {
+							".": {},
+							"f:loadBalancerCapabilities": {}
+						},
+						"f:capacity": {
+							".": {},
+							"f:cpu": {},
+							"f:memory": {},
+							"f:pods": {}
+						},
+						"f:conditions": {},
+						"f:driver": {},
+						"f:eksStatus": {
+							".": {},
+							"f:generatedNodeRole": {},
+							"f:managedLaunchTemplateID": {},
+							"f:managedLaunchTemplateVersions": {},
+							"f:privateRequiresTunnel": {},
+							"f:securityGroups": {},
+							"f:subnets": {},
+							"f:upstreamSpec": {},
+							"f:virtualNetwork": {}
+						},
+						"f:gkeStatus": {
+							".": {},
+							"f:privateRequiresTunnel": {},
+							"f:upstreamSpec": {}
+						},
+						"f:limits": {
+							".": {},
+							"f:cpu": {},
+							"f:memory": {},
+							"f:pods": {}
+						},
+						"f:linuxWorkerCount": {},
+						"f:nodeCount": {},
+						"f:provider": {},
+						"f:requested": {
+							".": {},
+							"f:cpu": {},
+							"f:memory": {},
+							"f:pods": {}
+						},
+						"f:version": {
+							".": {},
+							"f:buildDate": {},
+							"f:compiler": {},
+							"f:gitCommit": {},
+							"f:gitTreeState": {},
+							"f:gitVersion": {},
+							"f:goVersion": {},
+							"f:major": {},
+							"f:minor": {},
+							"f:platform": {}
+						}
+					}
+				},
+				"manager": "rancher",
+				"operation": "Update",
+				"time": "2024-05-02T13:47:19Z"
+			}
+		],
+		"name": "local"
+	},
+	"spec": {
+		"agentImageOverride": "",
+		"answers": {},
+		"clusterSecrets": {},
+		"description": "",
+		"desiredAgentImage": "",
+		"desiredAuthImage": "",
+		"displayName": "local",
+		"dockerRootDir": "/var/lib/docker",
+		"enableClusterAlerting": false,
+		"enableClusterMonitoring": false,
+		"enableNetworkPolicy": null,
+		"fleetWorkspaceName": "fleet-local",
+		"internal": true,
+		"k3sConfig": {
+			"k3supgradeStrategy": {
+				"serverConcurrency": 1,
+				"workerConcurrency": 1
+			},
+			"kubernetesVersion": "v1.27.11+k3s1"
+		},
+		"localClusterAuthEndpoint": {
+			"enabled": false
+		},
+		"windowsPreferedCluster": false
+	},
+	"status": {
+		"agentImage": "",
+		"aksStatus": {
+			"privateRequiresTunnel": null,
+			"rbacEnabled": null,
+			"upstreamSpec": null
+		},
+		"allocatable": {
+			"cpu": "16",
+			"memory": "65423128Ki",
+			"pods": "440"
+		},
+		"appliedEnableNetworkPolicy": false,
+		"appliedPodSecurityPolicyTemplateId": "",
+		"appliedSpec": {
+			"agentImageOverride": "",
+			"answers": {},
+			"clusterSecrets": {},
+			"description": "",
+			"desiredAgentImage": "",
+			"desiredAuthImage": "",
+			"displayName": "",
+			"enableClusterAlerting": false,
+			"enableClusterMonitoring": false,
+			"enableNetworkPolicy": null,
+			"internal": false,
+			"localClusterAuthEndpoint": {
+				"enabled": false
+			},
+			"windowsPreferedCluster": false
+		},
+		"authImage": "",
+		"capabilities": {
+			"loadBalancerCapabilities": {}
+		},
+		"capacity": {
+			"cpu": "16",
+			"memory": "65423128Ki",
+			"pods": "440"
+		},
+		"conditions": [
+			{
+				"status": "True",
+				"type": "Ready"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:21Z",
+				"status": "True",
+				"type": "DefaultProjectCreated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:21Z",
+				"status": "True",
+				"type": "SystemProjectCreated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:20Z",
+				"status": "True",
+				"type": "BackingNamespaceCreated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:22Z",
+				"status": "True",
+				"type": "CreatorMadeOwner"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:22Z",
+				"status": "True",
+				"type": "Pending"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:31Z",
+				"status": "True",
+				"type": "Provisioned"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:44Z",
+				"status": "True",
+				"type": "Waiting"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:22Z",
+				"status": "True",
+				"type": "NoDiskPressure"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:22Z",
+				"status": "True",
+				"type": "NoMemoryPressure"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:23Z",
+				"status": "True",
+				"type": "SecretsMigrated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:23Z",
+				"status": "True",
+				"type": "ServiceAccountSecretsMigrated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:23Z",
+				"status": "True",
+				"type": "RKESecretsMigrated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:23Z",
+				"status": "True",
+				"type": "ACISecretsMigrated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:30Z",
+				"status": "True",
+				"type": "GlobalAdminsSynced"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:31Z",
+				"status": "True",
+				"type": "SystemAccountCreated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:31Z",
+				"status": "True",
+				"type": "Updated"
+			},
+			{
+				"lastUpdateTime": "2024-05-02T13:34:33Z",
+				"status": "True",
+				"type": "Connected"
+			}
+		],
+		"driver": "k3s",
+		"eksStatus": {
+			"generatedNodeRole": "",
+			"managedLaunchTemplateID": "",
+			"managedLaunchTemplateVersions": null,
+			"privateRequiresTunnel": null,
+			"securityGroups": null,
+			"subnets": null,
+			"upstreamSpec": null,
+			"virtualNetwork": ""
+		},
+		"gkeStatus": {
+			"privateRequiresTunnel": null,
+			"upstreamSpec": null
+		},
+		"limits": {
+			"cpu": "0",
+			"memory": "0",
+			"pods": "0"
+		},
+		"linuxWorkerCount": 4,
+		"nodeCount": 7,
+		"provider": "k3s",
+		"requested": {
+			"cpu": "0",
+			"memory": "0",
+			"pods": "16"
+		},
+		"version": {
+			"buildDate": "2024-02-29T20:10:42Z",
+			"compiler": "gc",
+			"gitCommit": "06d6bc80b469a61e5e90438b1f2639cd136a89e7",
+			"gitTreeState": "clean",
+			"gitVersion": "v1.27.11+k3s1",
+			"goVersion": "go1.21.7",
+			"major": "1",
+			"minor": "27",
+			"platform": "linux/amd64"
+		}
+	}
+}
