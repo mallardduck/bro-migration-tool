@@ -63,6 +63,12 @@ func main() {
 			Action: transformK3sBackupForRke2,
 			Flags:  []cli.Flag{fileFlag, fileOutFlag},
 		},
+		{
+			Name:   "rke2-k3s",
+			Usage:  "Prepare a RKE2 origin backup for k3s restore.",
+			Action: transformRke2BackupForK3s,
+			Flags:  []cli.Flag{fileFlag, fileOutFlag},
+		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
@@ -108,5 +114,20 @@ func transformK3sBackupForRke2(c *cli.Context) {
 	}
 	// TODO: do the thing to migrate
 	newClusterData := migrate.K3sRancherToRke2Rancher(localClusterData)
+	backup.UpdateLocalIntoBackup(newClusterData, BackupFilePath, NewBackupFilename)
+}
+
+func transformRke2BackupForK3s(c *cli.Context) {
+	// Verify the file exists at the path...
+	if _, err := os.Stat(BackupFilePath); errors.Is(err, os.ErrNotExist) {
+		// path/to/whatever does not exist
+		logrus.Fatal("The backup archive file doesn't exist.")
+	}
+	localClusterData, err := backup.FetchLocalClusterFromBackup(BackupFilePath, LocalClusterFilePath)
+	if err != nil {
+		logrus.Fatal("Failed to fetch the local cluster from backup file")
+	}
+	// TODO: do the thing to migrate
+	newClusterData := migrate.Rke2RancherToK3sRancher(localClusterData)
 	backup.UpdateLocalIntoBackup(newClusterData, BackupFilePath, NewBackupFilename)
 }

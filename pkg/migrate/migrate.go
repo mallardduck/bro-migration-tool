@@ -12,6 +12,14 @@ func K3sRancherToRke2Rancher(k3sLocalCluster map[string]interface{}) map[string]
 	return res.(map[string]interface{})
 }
 
+func Rke2RancherToK3sRancher(k3sLocalCluster map[string]interface{}) map[string]interface{} {
+	// Replace "^k3s" with "^rke2" on both key and values
+	res := findAndReplace(k3sLocalCluster, `^rke2`, "k3s")
+	res = findAndReplace(res, `^f:rke2`, "f:k3s")
+	res = findAndReplace(res, `rke2r(.*)$`, "k3s$1")
+	return res.(map[string]interface{})
+}
+
 func findAndReplace(data interface{}, targetKey, replacement string) interface{} {
 	matchK3sRegex := regexp.MustCompile(targetKey)
 	switch val := data.(type) {
