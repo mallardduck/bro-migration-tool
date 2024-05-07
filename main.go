@@ -112,7 +112,6 @@ func transformK3sBackupForRke2(c *cli.Context) {
 	if err != nil {
 		logrus.Fatal("Failed to fetch the local cluster from backup file")
 	}
-	// TODO: do the thing to migrate
 	newClusterData := migrate.K3sRancherToRke2Rancher(localClusterData)
 	backup.UpdateLocalIntoBackup(newClusterData, BackupFilePath, NewBackupFilename)
 }
