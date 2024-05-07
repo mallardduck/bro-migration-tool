@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+source $(dirname $0)/version
+
+cd $(dirname $0)/..
+
+mkdir -p bin
+if [ "$(uname)" = "Linux" ]; then
+    OTHER_LINKFLAGS="-extldflags -static -s"
+fi
+
+LINKFLAGS="-X main.Version=$VERSION"
+LINKFLAGS="-X main.GitCommit=$COMMIT $LINKFLAGS"
+
+
+ARCHES=( "$ARCH" )
+# Set CROSS_ARCH to build for the other architecture
+if [ "$CROSS_ARCH" == "true" ]; then
+  case "$ARCH" in
+    amd64) XARCH=arm64 ;;
+    arm64) XARCH=amd64 ;;
+    *) echo "Unsupported ARCH of $ARCH" 1>&2 ; exit 1
+  esac
+  ARCHES+=( "$XARCH" )
+fi
+
+for A in "${ARCHES[@]}" ; do
+  GOARCH="$A" CGO_ENABLED=0 go build -ldflags "$LINKFLAGS $OTHER_LINKFLAGS" -o "bin/$BASENAME-$A"
+  # Set CROSS to build for other OS'es
+  if [ "$CROSS" = "true" ]; then
+    for OS in darwin windows ; do
+          GOARCH="$A" GOOS=$OS go build -ldflags "$LINKFLAGS" -o "bin/$BASENAME-$OS-$A"
+    done
+  fi
+done
+
+cd bin
+ln -sf "./$BASENAME-$ARCH" "./$BASENAME"
+cd ..
