@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/mallardduck/bro-migration-tool/pkg/migrate"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"os"
 
 	"github.com/mallardduck/bro-migration-tool/pkg/backup"
@@ -98,7 +99,9 @@ func pushLocalJson(c *cli.Context) {
 		logrus.Fatal("The local cluster file doesn't exist.")
 	}
 	localClusterData := backup.ReadLocalClusterJson(LocalClusterFilePath)
-	backup.UpdateLocalIntoBackup(localClusterData, BackupFilePath, NewBackupFilename)
+	localClusterObject := unstructured.Unstructured{}
+	localClusterObject.SetUnstructuredContent(localClusterData)
+	backup.UpdateLocalIntoBackup(localClusterObject, BackupFilePath, NewBackupFilename)
 	logrus.Infoln(NewBackupFilename)
 }
 

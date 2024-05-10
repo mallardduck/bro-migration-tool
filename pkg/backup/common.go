@@ -3,8 +3,8 @@ package backup
 import (
 	"archive/tar"
 	"compress/gzip"
-	"encoding/json"
 	"fmt"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"os"
 )
 
@@ -24,17 +24,13 @@ func OpenTarGzReader(filePath string) (*tar.Reader, error) {
 	return tarReader, nil
 }
 
-func FetchLocalClusterFromBackup(backupPath string, jsonPath string) (map[string]interface{}, error) {
-	jsonData := make(map[string]interface{})
+func FetchLocalClusterFromBackup(backupPath string, jsonPath string) (unstructured.Unstructured, error) {
+	clusterObject := unstructured.Unstructured{}
 	localClusterBytes, err := extractLocalClusterFromBackup(backupPath)
 	if err != nil {
-		return jsonData, err
+		return clusterObject, err
 	}
 
-	err = json.Unmarshal(localClusterBytes, &jsonData)
-	if err != nil {
-		return jsonData, err
-	}
-
-	return jsonData, nil
+	err = clusterObject.UnmarshalJSON(localClusterBytes)
+	return clusterObject, err
 }
