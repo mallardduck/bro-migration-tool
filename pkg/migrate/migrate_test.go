@@ -3,6 +3,7 @@ package migrate
 import (
 	"embed"
 	"github.com/stretchr/testify/assert"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"testing"
 )
 
@@ -73,8 +74,10 @@ func TestK3sRancherToRke2Rancher(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			actual := K3sRancherToRke2Rancher(test.input)
-			assert.Equal(t, test.expected, actual)
+			testObj := unstructured.Unstructured{}
+			testObj.SetUnstructuredContent(test.input)
+			actual := K3sRancherToRke2Rancher(testObj)
+			assert.Equal(t, test.expected, actual.UnstructuredContent())
 		})
 	}
 }
