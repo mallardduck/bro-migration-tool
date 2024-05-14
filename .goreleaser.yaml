@@ -42,27 +42,26 @@ archives:
     builds:
       - default
       - mac
-    id: zip
-    # this name template makes the OS and Arch compatible with the results of `uname`.
+    id: archive
     name_template: >-
       {{ .ProjectName }}_
-      {{- title .Os }}_
+      {{- tolower .Os }}_
       {{- trim .Arch }}
       {{- if .Amd64 }}{{- if ne .Os "darwin" }}-{{ .Amd64 }}{{ end }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
-    # use zip for windows archives
     format_overrides:
       - goos: windows
         format: zip
-  - format: binary
+  - id: binary
+    format: binary
     builds:
       - default
       - mac
     name_template: >-
       {{ .Binary }}_
-      {{- title .Os }}_{{ .Arch }}
-      {{- if eq .Arch "amd64" }}-{{ .Amd64 }}{{- else }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}{{ end }}
+      {{- tolower .Os }}_{{ .Arch }}
+      {{- if .Amd64 }}{{- if ne .Os "darwin" }}-{{ .Amd64 }}{{ end }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
 
 release:
   # If set to auto, will mark the release as not ready for production
