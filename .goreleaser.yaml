@@ -34,11 +34,8 @@ archives:
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
       {{ .Binary }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}
-      {{ .Arch }}{{ .Amd64 }}
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
+      {{- title .Os }}_{{ .Arch }}
+      {{- if eq .Arch "amd64" }}-{{ .Amd64 }}{{- else }}v{{ .Arm }}{{ end }}
 
 release:
   # If set to auto, will mark the release as not ready for production
