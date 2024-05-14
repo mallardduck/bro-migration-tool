@@ -16,21 +16,32 @@ before:
     - go generate ./...
 
 builds:
-  - env:
+  - id: default
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
       - windows
-      - darwin
     goarch:
       - amd64
       - arm64
     goamd64:
       - v2
       - v3
+  - id: mac
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - darwin
+    goarch:
+      - amd64
+      - arm64
 
 archives:
   - format: tar.gz
+    builds:
+      - default
+      - mac
     id: zip
     # this name template makes the OS and Arch compatible with the results of `uname`.
     name_template: >-
@@ -44,6 +55,9 @@ archives:
       - goos: windows
         format: zip
   - format: binary
+    builds:
+      - default
+      - mac
     name_template: >-
       {{ .Binary }}_
       {{- title .Os }}_{{ .Arch }}
