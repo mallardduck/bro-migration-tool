@@ -7,13 +7,14 @@ import (
 	"fmt"
 	"github.com/sirupsen/logrus"
 	"io"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"log"
 	"os"
 	"path"
 	"path/filepath"
 )
 
-func UpdateLocalIntoBackup(jsonData map[string]interface{}, backupPath string, newBackupName string) {
+func UpdateLocalIntoBackup(localClusterObject unstructured.Unstructured, backupPath string, newBackupName string) {
 	// 1. extract current tar into a temp folder,
 	tempBackupPath, err := prepareTempBackupDir(backupPath)
 	if err != nil {
@@ -21,7 +22,7 @@ func UpdateLocalIntoBackup(jsonData map[string]interface{}, backupPath string, n
 	}
 	logrus.Info(*tempBackupPath)
 	// 2. then update the local cluster data in the temp backup,
-	err = updateLocalClusterInBackup(*tempBackupPath, jsonData)
+	err = updateLocalClusterInBackup(*tempBackupPath, localClusterObject)
 	if err != nil {
 		log.Fatalf("Error preparing updated backup: %v", err)
 	}
@@ -89,8 +90,8 @@ func prepareTempBackupDir(backupPath string) (*string, error) {
 	return &tmpDir, nil
 }
 
-func updateLocalClusterInBackup(backupPath string, jsonData map[string]interface{}) error {
-	data, err := json.Marshal(jsonData)
+func updateLocalClusterInBackup(backupPath string, localClusterObject unstructured.Unstructured) error {
+	data, err := localClusterObject.MarshalJSON()
 	if err != nil {
 		return err
 	}

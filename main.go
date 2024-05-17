@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/mallardduck/bro-migration-tool/pkg/migrate"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"os"
 
 	"github.com/mallardduck/bro-migration-tool/pkg/backup"
@@ -82,8 +83,10 @@ func pullLocalJson(c *cli.Context) {
 		// path/to/whatever does not exist
 		logrus.Fatal("The backup archive file doesn't exist.")
 	}
-	// TODO: actually do something with these results
-	_, _ = backup.PullLocalFromBackup(BackupFilePath, LocalClusterFilePath)
+	_, err := backup.PullLocalFromBackup(BackupFilePath, LocalClusterFilePath)
+	if err != nil {
+		logrus.Fatalf("cannot pull local cluster from backup %v", err)
+	}
 }
 
 func pushLocalJson(c *cli.Context) {
@@ -98,7 +101,9 @@ func pushLocalJson(c *cli.Context) {
 		logrus.Fatal("The local cluster file doesn't exist.")
 	}
 	localClusterData := backup.ReadLocalClusterJson(LocalClusterFilePath)
-	backup.UpdateLocalIntoBackup(localClusterData, BackupFilePath, NewBackupFilename)
+	localClusterObject := unstructured.Unstructured{}
+	localClusterObject.SetUnstructuredContent(localClusterData)
+	backup.UpdateLocalIntoBackup(localClusterObject, BackupFilePath, NewBackupFilename)
 	logrus.Infoln(NewBackupFilename)
 }
 
@@ -126,7 +131,6 @@ func transformRke2BackupForK3s(c *cli.Context) {
 	if err != nil {
 		logrus.Fatal("Failed to fetch the local cluster from backup file")
 	}
-	// TODO: do the thing to migrate
 	newClusterData := migrate.Rke2RancherToK3sRancher(localClusterData)
 	backup.UpdateLocalIntoBackup(newClusterData, BackupFilePath, NewBackupFilename)
 }
