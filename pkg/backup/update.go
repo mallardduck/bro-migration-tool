@@ -96,7 +96,7 @@ func updateLocalClusterInBackup(backupPath string, localClusterObject unstructur
 		return err
 	}
 	localClusterFilePath := path.Join(backupPath, "clusters.management.cattle.io#v3/local.json")
-	localClusterFile, err := os.OpenFile(localClusterFilePath, os.O_RDWR|os.O_CREATE, 0644)
+	localClusterFile, err := os.OpenFile(localClusterFilePath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		return err
 	}

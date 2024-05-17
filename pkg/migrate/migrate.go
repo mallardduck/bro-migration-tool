@@ -9,11 +9,11 @@ import (
 	"strings"
 )
 
-func K3sRancherToRke2Rancher(k3sLocalCluster unstructured.Unstructured) unstructured.Unstructured {
+func K3sRancherToRke2Rancher(localCluster unstructured.Unstructured) unstructured.Unstructured {
 	// Replace "^k3s" with "^rke2" on both key and values
-	res := findAndReplaceLabelsValue(k3sLocalCluster, `^k3s$`, "rke2")
+	res := findAndReplaceLabelsValue(localCluster, `^k3s$`, "rke2")
 	res = findAndReplaceAnnotationsValue(res, `k3s([0-9]*)$`, "rke2r$1")
-	res = findAndReplaceStatusValue(k3sLocalCluster, `^k3s$`, "rke2")
+	res = findAndReplaceStatusValue(res, `^k3s$`, "rke2")
 	res = findAndReplaceValueOn(res, "spec.k3sConfig", `k3s([0-9]*)$`, "rke2r$1")
 	res = findAndReplaceKeyOn(res, "spec.k3sConfig", `^k3s`, "rke2")
 	res = findAndReplaceKeyOn(res, "spec", `^k3s`, "rke2")
@@ -22,10 +22,10 @@ func K3sRancherToRke2Rancher(k3sLocalCluster unstructured.Unstructured) unstruct
 	return res
 }
 
-func Rke2RancherToK3sRancher(k3sLocalCluster unstructured.Unstructured) unstructured.Unstructured {
-	res := findAndReplaceLabelsValue(k3sLocalCluster, `^rke2$`, "k3s")
+func Rke2RancherToK3sRancher(localCluster unstructured.Unstructured) unstructured.Unstructured {
+	res := findAndReplaceLabelsValue(localCluster, `^rke2$`, "k3s")
 	res = findAndReplaceAnnotationsValue(res, `rke2r([0-9]*)$`, "k3s$1")
-	res = findAndReplaceStatusValue(k3sLocalCluster, `^rke2$`, "k3s")
+	res = findAndReplaceStatusValue(res, `^rke2$`, "k3s")
 	res = findAndReplaceValueOn(res, "spec.rke2Config", `rke2r([0-9]*)$`, "k3s$1")
 	res = findAndReplaceKeyOn(res, "spec.rke2Config", `^rke2`, "k3s")
 	res = findAndReplaceKeyOn(res, "spec", `^rke2`, "k3s")
@@ -70,7 +70,7 @@ func findAndReplaceStatusValue(data unstructured.Unstructured, targetKey string,
 		}
 	}
 	version := status["version"].(map[string]interface{})
-	currentPlatform := version["platform"]
+	currentPlatform := version["platform"].(string)
 	version = map[string]interface{}{
 		"platform": currentPlatform,
 	}
