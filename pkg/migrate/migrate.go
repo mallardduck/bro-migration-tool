@@ -69,12 +69,7 @@ func findAndReplaceStatusValue(data unstructured.Unstructured, targetKey string,
 			status["provider"] = matchRegex.ReplaceAllString(status["provider"].(string), replacement)
 		}
 	}
-	version := status["version"].(map[string]interface{})
-	currentPlatform := version["platform"].(string)
-	version = map[string]interface{}{
-		"platform": currentPlatform,
-	}
-	status["version"] = version
+	delete(status, "version")
 	objectData["status"] = status
 	data.SetUnstructuredContent(objectData)
 
