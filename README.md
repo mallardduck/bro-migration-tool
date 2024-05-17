@@ -39,6 +39,7 @@ Just with this small middle step to prepare a backup for restore on the new clus
 6. Install Rancher Backup helm chart,
 7. Apply a `Restore` manifest using the file we just uploaded,
 8. Give the restore time to complete, then continue following the "Migrating Rancher to a New Cluster" directions.
+9. Observe the rancher cluster and give it plent of time to resolve things. (Work with your Support Engineer if concerned)
 
 ### RKE2 -> K3s
 1. Create a backup of your Rancher app running on k3s (ideally save on S3),
@@ -49,3 +50,4 @@ Just with this small middle step to prepare a backup for restore on the new clus
 6. Install Rancher Backup helm chart,
 7. Apply a `Restore` manifest using the file we just uploaded,
 8. Give the restore time to complete, then continue following the "Migrating Rancher to a New Cluster" directions.
+9. Observe the rancher cluster and give it plent of time to resolve things. (Work with your Support Engineer if concerned)
