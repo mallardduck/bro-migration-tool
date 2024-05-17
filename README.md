@@ -30,7 +30,7 @@ Ultimately, this process is essentially the same as
 [Migrating Rancher to a New Cluster](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/migrate-rancher-to-new-cluster) directions.
 Just with this small middle step to prepare a backup for restore on the new cluster.
 
-### K3S -> RKE2
+### K3s -> RKE2
 1. Create a backup of your Rancher app running on k3s (ideally save on S3),
 2. Download the backup from S3 to local system,
 3. Run `bro-migration-tool k3s-rke2 -f {input.tar.gz} -o {output-file}` (note `-o` flag is just name string, w/o extension),
@@ -40,7 +40,7 @@ Just with this small middle step to prepare a backup for restore on the new clus
 7. Apply a `Restore` manifest using the file we just uploaded,
 8. Give the restore time to complete, then continue following the "Migrating Rancher to a New Cluster" directions.
 
-### K3S -> RKE2
+### RKE2 -> K3s
 1. Create a backup of your Rancher app running on k3s (ideally save on S3),
 2. Download the backup from S3 to local system,
 3. Run `bro-migration-tool rke2-k3s -f {input.tar.gz} -o {output-file}` (note `-o` flag is just name string, w/o extension),
