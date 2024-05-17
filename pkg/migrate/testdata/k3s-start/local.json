@@ -29,47 +29,8 @@
 				"apiVersion": "management.cattle.io/v3",
 				"fieldsType": "FieldsV1",
 				"fieldsV1": {
-					"f:metadata": {
-						"f:annotations": {
-							".": {},
-							"f:authz.management.cattle.io/creator-role-bindings": {},
-							"f:authz.management.cattle.io/initial-sync": {},
-							"f:lifecycle.cattle.io/create.cluster-agent-controller-cleanup": {},
-							"f:lifecycle.cattle.io/create.cluster-provisioner-controller": {},
-							"f:lifecycle.cattle.io/create.cluster-scoped-gc": {},
-							"f:lifecycle.cattle.io/create.mgmt-cluster-rbac-remove": {},
-							"f:management.cattle.io/current-cluster-controllers-version": {},
-							"f:provisioner.cattle.io/encrypt-migrated": {},
-							"f:provisioner.cattle.io/ke-driver-update": {}
-						},
-						"f:finalizers": {
-							".": {},
-							"v:\"controller.cattle.io/cluster-agent-controller-cleanup\"": {},
-							"v:\"controller.cattle.io/cluster-provisioner-controller\"": {},
-							"v:\"controller.cattle.io/cluster-scoped-gc\"": {},
-							"v:\"controller.cattle.io/mgmt-cluster-rbac-remove\"": {},
-							"v:\"wrangler.cattle.io/mgmt-cluster-remove\"": {}
-						},
-						"f:labels": {
-							".": {},
-							"f:provider.cattle.io": {}
-						}
-					},
 					"f:spec": {
 						".": {},
-						"f:agentImageOverride": {},
-						"f:answers": {},
-						"f:clusterSecrets": {},
-						"f:description": {},
-						"f:desiredAgentImage": {},
-						"f:desiredAuthImage": {},
-						"f:displayName": {},
-						"f:dockerRootDir": {},
-						"f:enableClusterAlerting": {},
-						"f:enableClusterMonitoring": {},
-						"f:enableNetworkPolicy": {},
-						"f:fleetWorkspaceName": {},
-						"f:internal": {},
 						"f:k3sConfig": {
 							".": {},
 							"f:k3supgradeStrategy": {
@@ -78,104 +39,6 @@
 								"f:workerConcurrency": {}
 							},
 							"f:kubernetesVersion": {}
-						},
-						"f:localClusterAuthEndpoint": {
-							".": {},
-							"f:enabled": {}
-						},
-						"f:windowsPreferedCluster": {}
-					},
-					"f:status": {
-						".": {},
-						"f:agentImage": {},
-						"f:aksStatus": {
-							".": {},
-							"f:privateRequiresTunnel": {},
-							"f:rbacEnabled": {},
-							"f:upstreamSpec": {}
-						},
-						"f:allocatable": {
-							".": {},
-							"f:cpu": {},
-							"f:memory": {},
-							"f:pods": {}
-						},
-						"f:appliedEnableNetworkPolicy": {},
-						"f:appliedPodSecurityPolicyTemplateId": {},
-						"f:appliedSpec": {
-							".": {},
-							"f:agentImageOverride": {},
-							"f:answers": {},
-							"f:clusterSecrets": {},
-							"f:description": {},
-							"f:desiredAgentImage": {},
-							"f:desiredAuthImage": {},
-							"f:displayName": {},
-							"f:enableClusterAlerting": {},
-							"f:enableClusterMonitoring": {},
-							"f:enableNetworkPolicy": {},
-							"f:internal": {},
-							"f:localClusterAuthEndpoint": {
-								".": {},
-								"f:enabled": {}
-							},
-							"f:windowsPreferedCluster": {}
-						},
-						"f:authImage": {},
-						"f:capabilities": {
-							".": {},
-							"f:loadBalancerCapabilities": {}
-						},
-						"f:capacity": {
-							".": {},
-							"f:cpu": {},
-							"f:memory": {},
-							"f:pods": {}
-						},
-						"f:conditions": {},
-						"f:driver": {},
-						"f:eksStatus": {
-							".": {},
-							"f:generatedNodeRole": {},
-							"f:managedLaunchTemplateID": {},
-							"f:managedLaunchTemplateVersions": {},
-							"f:privateRequiresTunnel": {},
-							"f:securityGroups": {},
-							"f:subnets": {},
-							"f:upstreamSpec": {},
-							"f:virtualNetwork": {}
-						},
-						"f:gkeStatus": {
-							".": {},
-							"f:privateRequiresTunnel": {},
-							"f:upstreamSpec": {}
-						},
-						"f:limits": {
-							".": {},
-							"f:cpu": {},
-							"f:memory": {},
-							"f:pods": {}
-						},
-						"f:linuxWorkerCount": {},
-						"f:nodeCount": {},
-						"f:provider": {},
-						"f:requested": {
-							".": {},
-							"f:cpu": {},
-							"f:memory": {},
-							"f:pods": {}
-						},
-						"f:version": {
-							".": {},
-							"f:buildDate": {},
-							"f:compiler": {},
-							"f:gitCommit": {},
-							"f:gitTreeState": {},
-							"f:gitVersion": {},
-							"f:goVersion": {},
-							"f:major": {},
-							"f:minor": {},
-							"f:platform": {}
 						}
 					}
 				},
