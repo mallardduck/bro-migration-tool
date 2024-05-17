@@ -130,10 +130,7 @@ func TestK3sRancherToRke2Rancher(t *testing.T) {
   },
   "status": {
     "driver": "imported",
-    "provider": "rke2",
-    "version": {
-      "platform": "linux/amd64"
-    }
+    "provider": "rke2"
   }
 }`,
 		},
@@ -260,10 +257,7 @@ func TestRke2RancherToK3sRancher(t *testing.T) {
   },
   "status": {
     "driver": "imported",
-    "provider": "k3s",
-    "version": {
-      "platform": "linux/amd64"
-    }
+    "provider": "k3s"
   }
 }`,
 		},
