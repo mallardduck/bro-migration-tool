@@ -3,6 +3,8 @@
 **Disclaimer:** This tool is a dev tool meant for engineers and comes with no warranty or support.
 This is not an official Rancher tool for end-users. Only use this tool under direct direction from SUSE/Rancher support.
 
+## The preferred method is documented [here](https://ranchermanager.docs.rancher.com/how-to-guides/new-user-guides/backup-restore-and-disaster-recovery/migrate-rancher-to-new-cluster#2-restore-from-backup-using-a-restore-custom-resource) and serach for the section with `When migrating Rancher between any two different Kubernetes distributions`.
+
 ## What does it do?
 This tool essentially just extracts the `"clusters.management.cattle.io#v3/local.json"` file from the tar.
 Then you can edit it as needed and then repackage the file into a backup.
